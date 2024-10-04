@@ -11,7 +11,7 @@ export type Path = {
 export type Option = {
     title: string,
     element: HTMLInputElement | undefined,
-    next: Path | undefined,
+    path: Path | undefined,
 }
 
 export type Question = {
@@ -21,6 +21,7 @@ export type Question = {
     type: string,
     options: Option[],
     additional: AdditionalInfo[] | undefined,
+    response: string | undefined,
 }
 
 export type Section = {

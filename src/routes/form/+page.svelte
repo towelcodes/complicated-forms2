@@ -13,11 +13,11 @@
     let questions: Question[] = [];
 
     const changed = (question: Question | Section, sel: Option[]) => {
-        sel.forEach((option) => {
-            if (option.next) {
+        // sel.forEach((option) => {
+        //     if (option.next) {
                 
-            }
-        });
+        //     }
+        // });
     }
 
     console.log(data);

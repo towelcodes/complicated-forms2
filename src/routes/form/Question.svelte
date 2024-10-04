@@ -25,16 +25,20 @@
         str.toLowerCase().replace(/ /g, "-").replace(/\./g, "");
 
     const updateSub = (options: Option[]) => {
+        console.log(options);
+        // clear sub paths
+        subPaths = [];
         options.forEach((o) => {
-            if (o.next) {
-                if (!subPaths.includes(o.next)) {
-                    subPaths.push(o.next);
+            if (o.path) {
+                if (!subPaths.includes(o.path)) {
+                    subPaths.push(o.path);
                 }
             }
         });
     }
 
     const changed = (e: Event) => {
+        console.log(e);
         if (callback) {
             if (type === "radio") {
                 let sel = optionsMap.get(selected_single);
@@ -100,6 +104,6 @@
 <!-- render questions below if there are any -->
 {#each subPaths as sub}
     {#each sub.questions as q}
-        <svelte:self question={q} callback={subChanged} identifier={q.identifier} title={q.title} description={q.description} type={q.type} ></svelte:self>
+        <svelte:self question={q} callback={subChanged} identifier={q.identifier} title={q.title} description={q.description} type={q.type} options={q.options} ></svelte:self>
     {/each}
 {/each}

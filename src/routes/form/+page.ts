@@ -11,51 +11,55 @@ export const load: PageLoad = () => {
                 options: [
                     {
                         title: "Part 1",
-                        tree: [
-                            {
-                                identifier: "1.1",
-                                title: "Question 1.1",
-                                type: "text",
-                                options: [
-                                    {
-                                        title: "Yes"
-                                    },
-                                    {
-                                        title: "No"
-                                    }
-                                ]
-                            }, {
-                                identifier: "1.2",
-                                title: "Question 1.2",
-                                type: "text",
-                                options: [
-                                    {
-                                        title: "maybe"
-                                    },
-                                    {
-                                        title: "maybe not"
-                                    }
-                                ]
-                            }
-                        ]
+                        path: {
+                            questions: [
+                                {
+                                    identifier: "1.1",
+                                    title: "Question 1.1",
+                                    type: "radio",
+                                    options: [
+                                        {
+                                            title: "Yes"
+                                        },
+                                        {
+                                            title: "No"
+                                        }
+                                    ]
+                                }, {
+                                    identifier: "1.2",
+                                    title: "Question 1.2",
+                                    type: "radio",
+                                    options: [
+                                        {
+                                            title: "maybe"
+                                        },
+                                        {
+                                            title: "maybe not"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
                     },
                     {
                         title: "Part 2",
-                        tree: [
-                            {
-                                identifier: "2.1",
-                                title: "Question 2.1",
-                                type: "text",
-                                options: [
-                                    {
-                                        title: "Yes"
-                                    },
-                                    {
-                                        title: "No"
-                                    }
-                                ]
-                            }
-                        ]
+                        path: {
+                            questions: [
+                                {
+                                    identifier: "2.1",
+                                    title: "Question 2.1",
+                                    type: "radio",
+                                    options: [
+                                        {
+                                            title: "Yes"
+                                        },
+                                        {
+                                            title: "No"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
                     }
                 ]
             }
