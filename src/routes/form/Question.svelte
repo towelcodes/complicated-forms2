@@ -1,8 +1,9 @@
 <script lang="ts">
-    import type { Option, Question, Section } from "$lib/types";
+    import type { Option, Path, Question, Section } from "$lib/types";
     import { onMount } from "svelte";
 
     export let question: Question | Section;
+    export let identifier: string | undefined = undefined; // does not have to be unique
     export let title: string;
     export let type: string;
     export let description: string | undefined = undefined;
@@ -15,7 +16,7 @@
     let input_value: string;
 
     // questions to render below
-    let subquestions: Question[] = [];
+    let subPaths: Path[] = [];
 
     let optionsMap: Map<string, Option> = new Map();
 
@@ -23,10 +24,24 @@
     const slugify = (str = "") =>
         str.toLowerCase().replace(/ /g, "-").replace(/\./g, "");
 
+    const updateSub = (options: Option[]) => {
+        options.forEach((o) => {
+            if (o.next) {
+                if (!subPaths.includes(o.next)) {
+                    subPaths.push(o.next);
+                }
+            }
+        });
+    }
+
     const changed = (e: Event) => {
         if (callback) {
             if (type === "radio") {
-                callback(question, [optionsMap.get(selected_single)]);
+                let sel = optionsMap.get(selected_single);
+                if (sel) {
+                    updateSub([sel]);
+                    callback(question, [sel]);
+                }
             } else if (type === "checkbox") {
                 let sel: Option[] = [];
                 selected_multi.forEach((title) => {
@@ -35,9 +50,14 @@
                         sel.push(opt);
                     }
                 })
+                updateSub(sel);
                 callback(question, sel);
             }
         }
+    }
+
+    const subChanged = (question: Question, options: Option[]) => {
+        console.log("queestion options");
     }
 
     onMount(() => {
@@ -54,7 +74,7 @@
 
 <div class="latte mx-auto w-4/6 m-5 p-8 bg-surface0 rounded shadow-md">
     <div>
-        <h1 class="text-2xl font-bold">{title}</h1>
+        <h1 class="text-2xl font-bold"><span class="bg-blue-400 rounded p-1 text-xl">{identifier || ""}</span> {title}</h1>
         <p class="text-gray-500">{description || ""}</p>
     </div>
 
@@ -76,3 +96,10 @@
         </form>
     </div>
 </div>
+
+<!-- render questions below if there are any -->
+{#each subPaths as sub}
+    {#each sub.questions as q}
+        <svelte:self question={q} callback={subChanged} identifier={q.identifier} title={q.title} description={q.description} type={q.type} ></svelte:self>
+    {/each}
+{/each}

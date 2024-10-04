@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Section, Option, Question } from "$lib/types";
-    import Question as QuestionComp from "./Question.svelte";
+    import QuestionComp from "./Question.svelte";
 
     export let section: Section;
     let activePaths: Question[][] = [];
@@ -21,6 +21,6 @@
 <!-- subquestions -->
 {#each activePaths as path}
     {#each path as question}
-        <QuestionComp question={question} callback={progressPath} title={question.title} description={question.description} type={question.type} options={question.options}></QuestionComp>
+        <QuestionComp question={question} callback={progressPath} identifier={question.identifier} title={question.title} description={question.description} type={question.type} options={question.options}></QuestionComp>
     {/each}
 {/each}

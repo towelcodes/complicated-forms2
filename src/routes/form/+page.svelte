@@ -34,6 +34,6 @@
 </div>
 
 {#each data.sections as section}
-    <Question question={section} callback={changed} title={section.title} description={section.description} type="checkbox" options={section.options}></Question>
+    <Question question={section} callback={changed} identifier="1A" title={section.title} description={section.description} type="checkbox" options={section.options}></Question>
 {/each}
 <!-- <Question title={data.questions[0].title} options={data.questions[0].options}></Question> -->

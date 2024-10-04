@@ -4,18 +4,23 @@ export type AdditionalInfo = {
     value: string,
 }
 
+export type Path = {
+    questions: Question[]
+}
+
 export type Option = {
     title: string,
-    element: HTMLInputElement | undefined;
-    next: Question[] | undefined
+    element: HTMLInputElement | undefined,
+    next: Path | undefined,
 }
 
 export type Question = {
     identifier: string,
     title: string,
+    description: string | undefined,
     type: string,
     options: Option[],
-    additional: AdditionalInfo[] | undefined
+    additional: AdditionalInfo[] | undefined,
 }
 
 export type Section = {
