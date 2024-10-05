@@ -3,10 +3,17 @@ import { browser } from "$app/environment";
 import type { Response } from "./types";
 
 const raw = browser ? window.localStorage.getItem("responses") : undefined;
-const json = raw ? JSON.parse(raw) : undefined;
-const initialValue: Map<string, Response> = json ? new Map(Object.entries(json)) : new Map();
-console.log("initial val", initialValue);
 
+let initialValue: Map<string, Response> = new Map();
+try {
+    const json = raw ? JSON.parse(raw) : undefined;
+    initialValue = json ? new Map(Object.entries(json)) : new Map();
+} catch {
+    console.warn("malformed json will be reset");
+    initialValue = new Map();
+}
+
+// TODO add a reset progress button
 const storedResponses = writable<Map<string, Response>>(initialValue, () => {
     console.log("got a subscriber");
     return () => console.log("no more subscribers");
