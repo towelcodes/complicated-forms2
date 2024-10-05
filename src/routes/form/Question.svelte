@@ -32,7 +32,7 @@
     }
 
     // single selection
-    $: if (response.single) {
+    $: if (response.single && question.type == QuestionType.Radio) {
         updateStore(response);
         let sel = optionsMap.get(response.single);
         if (sel) {
@@ -42,9 +42,18 @@
         }
     }
 
+    // because we need a default value for multiple selections, 
+    // we have to check if the value has been restored yet
+    // otherwise it will always be overwitten to be empty
+    let multiInit = false;
     //  multi selection
-    $: if (response.multi) {
-        if (response.multi.length > 0) {
+    $: if (response.multi && question.type == QuestionType.Checkbox) {
+        if (!multiInit) {
+            if (response.multi.length > 0) {
+                updateStore(response);
+                multiInit = true;
+            }
+        } else {
             updateStore(response);
         }
         let sel: Option[] = [];
@@ -82,17 +91,15 @@
 
     const updateSub = (options: Option[]) => {
         // clear sub paths
-        console.log("updating subs on question", question.title, "with options", options);
         subPaths = [];
         options.forEach((o) => {
+            console.log(o);
             if (o.path) {
                 if (!subPaths.includes(o.path)) {
                     subPaths.push(o.path);
                 }
             }
         });
-        console.log("paths");
-        console.log(subPaths);
     }
 
     onMount(() => {
@@ -111,8 +118,6 @@
             response = res;
         }
     });
-
-    console.log(options);
 </script>
 
 <div class="latte mx-auto w-4/6 m-5 p-8 bg-surface0 rounded shadow-md">
