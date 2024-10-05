@@ -1,34 +1,62 @@
 import type { PageLoad } from './$types';
+import type { FormData } from '$lib/types';
+import { QuestionType } from '$lib/types';
 
 export const load: PageLoad = () => {
-	return {
+    const data: FormData = {
         title: "Form Title",
         description: "form description",
-        sections: [
+        allRequired: true,
+        questions: [
             {
+                uid: "1",
                 title: "Section Title",
                 description: "section description",
+                type: QuestionType.Checkbox,
                 options: [
                     {
                         title: "Part 1",
                         path: {
                             questions: [
                                 {
+                                    uid: "1.1",
                                     identifier: "1.1",
                                     title: "Question 1.1",
-                                    type: "radio",
+                                    type: QuestionType.Radio,
                                     options: [
                                         {
-                                            title: "Yes"
+                                            title: "Yes",
+                                            path: {
+                                                questions: [
+                                                    {
+                                                        uid: "1.1.1",
+                                                        required: false,
+                                                        title: "Question 1.1.1",
+                                                        type: QuestionType.Radio,
+                                                        options: [
+                                                            {
+                                                                title: "uhh"
+                                                            },
+                                                            {
+                                                                title: "probably"
+                                                            },
+                                                            {
+                                                                title: "yeah"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
                                         },
                                         {
                                             title: "No"
                                         }
                                     ]
                                 }, {
+                                    uid: "1.2",
                                     identifier: "1.2",
                                     title: "Question 1.2",
-                                    type: "radio",
+                                    type: QuestionType.Radio,
                                     options: [
                                         {
                                             title: "maybe"
@@ -46,9 +74,10 @@ export const load: PageLoad = () => {
                         path: {
                             questions: [
                                 {
+                                    uid: "2.1",
                                     identifier: "2.1",
                                     title: "Question 2.1",
-                                    type: "radio",
+                                    type: QuestionType.Radio,
                                     options: [
                                         {
                                             title: "Yes"
@@ -64,5 +93,7 @@ export const load: PageLoad = () => {
                 ]
             }
         ]
-	};
+    };
+
+    return data;
 };

@@ -1,37 +1,47 @@
-export type AdditionalInfo = {
+export interface AdditionalInfo {
     title: string,
     type: string,
     value: string,
 }
 
-export type Path = {
+export interface Path {
     questions: Question[]
 }
 
-export type Option = {
+// TODO add text input options with regex constraints
+export interface Option {
     title: string,
-    element: HTMLInputElement | undefined,
-    path: Path | undefined,
+    element?: HTMLInputElement,
+    path?: Path,
 }
 
-export type Question = {
-    identifier: string,
+export enum QuestionType {
+    Radio,
+    Checkbox,
+    Text
+}
+
+export interface Question {
+    uid: string, // must be unique so question can be identified
+    identifier?: string, // does not have to be unique
+    required?: boolean, // defaults to true
     title: string,
-    description: string | undefined,
-    type: string,
+    description?: string,
+    type: QuestionType,
     options: Option[],
-    additional: AdditionalInfo[] | undefined,
-    response: string | undefined,
+    additional?: AdditionalInfo[],
+    response?: Response,
 }
 
-export type Section = {
-    title: string,
-    description: string,
-    options: Option[]
+export interface Response { // only one of these should be filled ideally
+    single?: string,
+    multi: string[],
+    text?: string
 }
 
-export type FormData = {
+export interface FormData {
     title: string,
     description: string,
-    sections: Section[],
+    allRequired: boolean,
+    questions: Question[],
 }
