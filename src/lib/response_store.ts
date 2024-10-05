@@ -10,14 +10,10 @@ try {
     initialValue = json ? new Map(Object.entries(json)) : new Map();
 } catch {
     console.warn("malformed json will be reset");
-    initialValue = new Map();
 }
 
 // TODO add a reset progress button
-const storedResponses = writable<Map<string, Response>>(initialValue, () => {
-    console.log("got a subscriber");
-    return () => console.log("no more subscribers");
-});
+const storedResponses = writable<Map<string, Response>>(initialValue);
 
 storedResponses.subscribe((responses) => {
     console.log("responses changed: ", responses);

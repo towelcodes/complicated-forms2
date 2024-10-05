@@ -46,15 +46,15 @@
     $: if (response.multi) {
         if (response.multi.length > 0) {
             updateStore(response);
-            let sel: Option[] = [];
-            response.multi.forEach((title) => {
-                let opt = optionsMap.get(title);
-                if (opt != undefined) {
-                    sel.push(opt);
-                }
-            })
-            updateSub(sel);
         }
+        let sel: Option[] = [];
+        response.multi.forEach((title) => {
+            let opt = optionsMap.get(title);
+            if (opt != undefined) {
+                sel.push(opt);
+            }
+        })
+        updateSub(sel);
     }
 
     $: {
@@ -82,6 +82,7 @@
 
     const updateSub = (options: Option[]) => {
         // clear sub paths
+        console.log("updating subs on question", question.title, "with options", options);
         subPaths = [];
         options.forEach((o) => {
             if (o.path) {
