@@ -47,6 +47,24 @@
             }
         });
     }
+
+    const submit = () => {
+        submitting = true;
+        // TODO check all requried options have value
+        console.log(data);
+        fetch("/api/submit", {
+            method: "POST",
+            body: JSON.stringify(data),
+        }).then((res) => {
+            console.log(res);
+            if (res.ok) {
+                submitting = false;
+                createModal();
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+    };
 </script>
 
 <div id="modal"></div>
@@ -54,8 +72,8 @@
 {#if progressRestored}
     <div transition:fly={{ duration: 300, easing: quadInOut, y: -6 }} class="fixed overflow-hidden mt-1 left-1/2 -translate-x-1/2 text-white text-sm text-center content-center bg-black rounded-xl px-4 py-2 opacity-70 cursor-default">
         Your progress was restored from your last session.
-        <span class="bg-white rounded ml-1 text-sm text-black p-1 hover:bg-slate-400 hover:cursor-pointer transition" on:click={() => resetSelections()}>Reset</span> 
-        <span class="ml-2 hover:cursor-pointer" on:click={() => progressRestored = false}>✖</span>
+        <button class="bg-white rounded ml-1 text-sm text-black p-1 hover:bg-slate-400 hover:cursor-pointer transition" on:click={() => resetSelections()}>Reset</button> 
+        <button class="ml-2 hover:cursor-pointer" on:click={() => progressRestored = false}>✖</button>
         <!-- <div class="absolute top-0 left-0 h-full bg-pink opacity-20 transition duration-2000 ease-in-out"></div> -->
     </div>
 {/if}
@@ -90,7 +108,7 @@
 </div>
 
 <div class="text-center">
-    <button class="mx-auto mb-0 m-5 px-5 py-3 rounded shadow-md bg-green transition hover:bg-green-500 font-bold" on:click={() => submitting = true}>
+    <button class="mx-auto mb-0 m-5 px-5 py-3 rounded shadow-md bg-green transition hover:bg-green-500 font-bold" on:click={submit}>
         {#if submitting}
             <img src="{base}/icons/loading.png" class="h-10 inline animate-spin" alt="submitting..." />
         {:else}
@@ -100,7 +118,7 @@
     <span class="italic text-sm text-gray-400" style="line-height: 0;">
         Limited information about your device, such as your IP address, <br/>
         will be recorded along with your submission.
-        <a class="not-italic underline hover:cursor-pointer" on:click={() => createModal()}>Learn more</a>
+        <button class="not-italic underline hover:cursor-pointer" on:click={() => createModal()}>Learn more</button>
     </span>
 </div>
 <!-- <Question title={data.questions[0].title} options={data.questions[0].options}></Question> -->

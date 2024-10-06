@@ -12,7 +12,6 @@ try {
     console.warn("malformed json will be reset");
 }
 
-// TODO add a reset progress button
 const storedResponses = writable<Map<string, Response>>(initialValue);
 
 storedResponses.subscribe((responses) => {

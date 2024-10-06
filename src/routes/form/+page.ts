@@ -4,6 +4,8 @@ import { QuestionType } from '$lib/types';
 
 export const load: PageLoad = () => {
     const data: FormData = {
+        id: 0,
+        formVersion: 1,
         title: "Form Title",
         description: "form description",
         allRequired: true,
@@ -107,6 +109,8 @@ export const load: PageLoad = () => {
             }
         ]
     };
+
+    console.log(JSON.stringify(data));
 
     return data;
 };

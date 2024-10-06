@@ -40,6 +40,8 @@ export interface Response { // only one of these should be filled ideally
 }
 
 export interface FormData {
+    id: number,
+    formVersion: number,
     title: string,
     description: string,
     allRequired: boolean,
