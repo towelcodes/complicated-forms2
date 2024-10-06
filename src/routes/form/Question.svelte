@@ -5,6 +5,7 @@
     import { slugify } from "$lib/utils";
     import { onMount } from "svelte";
     import { get } from "svelte/store";
+    import { slide } from "svelte/transition";
 
     export let question: Question;
     export let identifier: string | undefined = undefined; // does not have to be unique
@@ -120,7 +121,7 @@
     });
 </script>
 
-<div class="latte mx-auto w-4/6 m-5 p-8 bg-surface0 rounded shadow-md">
+<div transition:slide|global class="latte mx-auto w-4/6 m-5 p-8 bg-surface0 rounded shadow-md" >
     <div>
         <h1 class="text-2xl font-bold">
             {#if identifier}

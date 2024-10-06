@@ -65,6 +65,19 @@ export const load: PageLoad = () => {
                                             title: "maybe not"
                                         }
                                     ]
+                                }, {
+                                    uid: "1.3",
+                                    identifier: "1.3",
+                                    title: "Question 1.3",
+                                    type: QuestionType.Checkbox,
+                                    options: [
+                                        {
+                                            title: "Yes"
+                                        },
+                                        {
+                                            title: "No"
+                                        }
+                                    ]
                                 }
                             ]
                         }

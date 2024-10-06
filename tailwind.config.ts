@@ -5,7 +5,11 @@ export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
 
   theme: {
-    extend: {}
+    extend: {
+      transitionDuration: { 
+        '2000': '2000ms',
+      }
+    }
   },
 
   plugins: [
