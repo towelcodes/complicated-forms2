@@ -53,6 +53,12 @@ export const load: PageLoad = () => {
                                         {
                                             title: "No"
                                         }
+                                    ],
+                                    additional: [
+                                        {
+                                            "title": "Proof",
+                                            "description": "prove it or something"
+                                        }
                                     ]
                                 }, {
                                     uid: "1.2",
@@ -78,6 +84,12 @@ export const load: PageLoad = () => {
                                         },
                                         {
                                             title: "No"
+                                        }
+                                    ],
+                                    additional: [
+                                        {
+                                            "title": "Proof",
+                                            "description": "prove it or something"
                                         }
                                     ]
                                 }

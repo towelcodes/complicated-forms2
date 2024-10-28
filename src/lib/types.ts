@@ -1,7 +1,8 @@
 export interface AdditionalInfo {
     title: string,
-    type: string,
-    value: string,
+    description?: string,
+    // type: string, for now we assume all are text
+    value?: string,
 }
 
 export interface Path {

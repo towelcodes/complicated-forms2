@@ -96,7 +96,7 @@
 </div>
 
 {#each data.questions as question}
-    <Question question={question} title={question.title} description={question.description} type={question.type} options={question.options}></Question>
+    <Question question={question}></Question>
 {/each}
 
 <!-- TODO this should disappear when all required options have been selected -->

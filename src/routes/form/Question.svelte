@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Option, Path, Question, Response } from "$lib/types";
+    import type { AdditionalInfo, Option, Path, Question, Response } from "$lib/types";
     import { QuestionType } from "$lib/types";
     import storedResponses from "$lib/response_store";
     import { slugify } from "$lib/utils";
@@ -8,12 +8,24 @@
     import { slide } from "svelte/transition";
 
     export let question: Question;
-    export let identifier: string | undefined = undefined; // does not have to be unique
-    export let required: boolean = true;
-    export let title: string;
-    export let type: QuestionType;
-    export let description: string | undefined = undefined;
-    export let options: Option[];
+    // export let identifier: string | undefined = undefined; // does not have to be unique
+    // export let required: boolean = true;
+    // export let title: string;
+    // export let type: QuestionType;
+    // export let description: string | undefined = undefined;
+    // export let options: Option[];
+    // export let additional: AdditionalInfo[] = [];
+
+    let identifier = question.identifier;
+    let required = question.required ?? true;
+    let title = question.title;
+    let type = question.type;
+    let description = question.description;
+    let options = question.options;
+    let additional = question.additional;
+
+    console.log("additional info passed to q", title, additional);
+    console.log("additional info bundled with q", question.additional);
 
     // hold values from 
     let response: Response = {multi: []};
@@ -28,14 +40,15 @@
         });
     }
 
-    $: {
-        question.response = response;
-    }
+    $: question.response = response;
 
     // single selection
+    // needs to be async so we can ensure that the optionsMap is built
+    // TODO don't use a map to store options so we dont have to wait
     $: if (response.single && question.type == QuestionType.Radio) {
         updateStore(response);
         let sel = optionsMap.get(response.single);
+        console.log("updating for single ", question.title, "with sel", sel)
         if (sel) {
             updateSub([sel]);
         } else {
@@ -67,9 +80,9 @@
         updateSub(sel);
     }
 
-    $: {
-        console.log("updated", question.title, question.response);
-    }
+    // $: {
+    //     console.log("updated", question.title, question.response);
+    // }
 
     // text input
     // this will get updated for each character typed
@@ -88,13 +101,13 @@
     // questions to render below
     let subPaths: Path[] = [];
 
-    let optionsMap: Map<string, Option> = new Map();
 
     const updateSub = (options: Option[]) => {
+        console.log("updating subs for", question.title, options);
         // clear sub paths
         subPaths = [];
         options.forEach((o) => {
-            console.log(o);
+            console.log("checking option", o);
             if (o.path) {
                 if (!subPaths.includes(o.path)) {
                     subPaths.push(o.path);
@@ -102,6 +115,8 @@
             }
         });
     }
+
+    let optionsMap: Map<string, Option> = new Map();
 
     onMount(() => {
         // build mappings from option strings to option objects
@@ -119,6 +134,9 @@
             response = res;
         }
     });
+
+    let testval = "";
+    $: console.log(testval);
 </script>
 
 <div transition:slide|global class="latte mx-auto w-4/6 m-5 p-8 bg-surface0 rounded shadow-md" >
@@ -151,6 +169,19 @@
                 <p><img src="/icons/cross.png" class="inline h-5" alt="error"> Not implemented</p>
             {:else}
                 <p><img src="/icons/cross.png" class="inline h-5" alt="error"> Unsupported option</p>
+            {/if}
+
+            {#if additional}
+                {#each additional as a}
+                    <div class="my-2 p-4 bg-surface1 rounded-md">
+                        <span class="material-icons md-18 text-md align-bottom">edit_note</span>
+                        <label class="font-bold text-md">{a.title}</label><br>
+                        {#if a.description}
+                            <label class="text-gray-700 text-sm">{a.description}</label><br>
+                        {/if}
+                        <textarea rows="3" class="resize-none rounded w-3/4 p-1" placeholder="Enter additional information as required" bind:value={a.value}></textarea>
+                    </div>
+                {/each}
             {/if}
         </form>
     </div>
