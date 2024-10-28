@@ -175,11 +175,11 @@
                 {#each additional as a}
                     <div class="my-2 p-4 bg-surface1 rounded-md">
                         <span class="material-icons md-18 text-md align-bottom">edit_note</span>
-                        <label class="font-bold text-md">{a.title}</label><br>
+                        <span class="font-bold text-md">{a.title}</span><br>
                         {#if a.description}
-                            <label class="text-gray-700 text-sm">{a.description}</label><br>
+                            <span class="text-gray-700 text-sm">{a.description}</span><br>
                         {/if}
-                        <textarea rows="3" class="resize-none rounded w-3/4 p-1" placeholder="Enter additional information as required" bind:value={a.value}></textarea>
+                        <textarea rows="3" class="resize-none rounded mt-2 w-3/4 p-1" placeholder="Enter additional information as required" bind:value={a.value}></textarea>
                     </div>
                 {/each}
             {/if}
@@ -190,6 +190,6 @@
 <!-- render questions below if there are any -->
 {#each subPaths as sub}
     {#each sub.questions as q}
-        <svelte:self question={q} identifier={q.identifier} title={q.title} description={q.description} type={q.type} options={q.options} ></svelte:self>
+        <svelte:self question={q}></svelte:self>
     {/each}
 {/each}
