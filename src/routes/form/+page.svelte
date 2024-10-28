@@ -7,7 +7,6 @@
     import { quadInOut } from "svelte/easing";
     import storedResponses from "$lib/response_store";
     import { get } from "svelte/store";
-  import { onMount } from "svelte";
 
     const handleChange = (option: Option) => {
         console.log(option);
@@ -24,8 +23,6 @@
     }, 500);
 
     let submitting = false;
-
-    let questions: Question[] = [];
 
     const resetSelections = () => {
         storedResponses.set(new Map());
@@ -104,7 +101,10 @@
 
 <!-- TODO this should disappear when all required options have been selected -->
 <div class="latte mx-auto w-1/4 m-5 p-1 rounded shadow-md bg-orange-200">
-    <p class="flex items-center justify-center"><img src="{base}/icons/info.png" class="inline h-5 mr-4" alt="info">Choose an option to continue.</p>
+    <p class="flex items-center justify-center">
+        <span class="material-icons inline h-5 mr-4 mb-1 md-dark md-18">info</span>
+        Choose an option to continue.
+    </p>
 </div>
 
 <div class="text-center">
