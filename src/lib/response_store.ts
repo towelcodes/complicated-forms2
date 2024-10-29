@@ -15,9 +15,7 @@ try {
 const storedResponses = writable<Map<string, Response>>(initialValue);
 
 storedResponses.subscribe((responses) => {
-    console.log("responses changed: ", responses);
     if (browser) {
-        console.log("entries", responses.entries());
         localStorage.setItem("responses", JSON.stringify(Object.fromEntries(responses)));
     }
 });

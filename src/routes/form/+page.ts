@@ -1,126 +1,19 @@
 import type { PageLoad } from './$types';
 import type { FormData } from '$lib/types';
-import { QuestionType } from '$lib/types';
+import { error } from '@sveltejs/kit';
 
-export const load: PageLoad = () => {
-    const data: FormData = {
-        id: 0,
-        formVersion: 1,
-        title: "Form Title",
-        description: "form description",
-        allRequired: true,
-        questions: [
-            {
-                uid: "1",
-                title: "Section Title",
-                description: "section description",
-                type: QuestionType.Checkbox,
-                options: [
-                    {
-                        title: "Part 1",
-                        path: {
-                            questions: [
-                                {
-                                    uid: "1.1",
-                                    identifier: "1.1",
-                                    title: "Question 1.1",
-                                    type: QuestionType.Radio,
-                                    options: [
-                                        {
-                                            title: "Yes",
-                                            path: {
-                                                questions: [
-                                                    {
-                                                        uid: "1.1.1",
-                                                        required: false,
-                                                        title: "Question 1.1.1",
-                                                        type: QuestionType.Radio,
-                                                        options: [
-                                                            {
-                                                                title: "uhh"
-                                                            },
-                                                            {
-                                                                title: "probably"
-                                                            },
-                                                            {
-                                                                title: "yeah"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            title: "No"
-                                        }
-                                    ],
-                                    additional: [
-                                        {
-                                            "title": "Proof",
-                                            "description": "prove it or something"
-                                        }
-                                    ]
-                                }, {
-                                    uid: "1.2",
-                                    identifier: "1.2",
-                                    title: "Question 1.2",
-                                    type: QuestionType.Radio,
-                                    options: [
-                                        {
-                                            title: "maybe"
-                                        },
-                                        {
-                                            title: "maybe not"
-                                        }
-                                    ]
-                                }, {
-                                    uid: "1.3",
-                                    identifier: "1.3",
-                                    title: "Question 1.3",
-                                    type: QuestionType.Checkbox,
-                                    options: [
-                                        {
-                                            title: "Yes"
-                                        },
-                                        {
-                                            title: "No"
-                                        }
-                                    ],
-                                    additional: [
-                                        {
-                                            "title": "Proof",
-                                            "description": "prove it or something"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        title: "Part 2",
-                        path: {
-                            questions: [
-                                {
-                                    uid: "2.1",
-                                    identifier: "2.1",
-                                    title: "Question 2.1",
-                                    type: QuestionType.Radio,
-                                    options: [
-                                        {
-                                            title: "Yes"
-                                        },
-                                        {
-                                            title: "No"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
-        ]
-    };
+export const load: PageLoad = async ({ url, fetch }) => {
+    const id = url.searchParams.get("id");
+    if (!id) error(400, "Form not specified");
+    const token = url.searchParams.get("token");
+
+    const res = await fetch(`/api/form?id=${id}${null !== token ? `&token=${token}` : ""}`);
+    const json = await res.json();
+    if (res.status !== 200) {
+        error(res.status, json.message);
+    }
+
+    const data = json as FormData; 
 
     console.log(JSON.stringify(data));
 
