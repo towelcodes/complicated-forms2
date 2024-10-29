@@ -1,29 +1,22 @@
 import { error } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { POSTGREST_ENDPOINT, SERVICE_ROLE_KEY } from "$env/static/private";
+import { db, FormError, FormErrorType } from "$lib/server/db";
 
-export const GET: RequestHandler = async ({ request }) => {
-    if (request.body == null) {
-        error(400, "Missing body");
+export const GET: RequestHandler = async ({ url }) => {
+    const id = url.searchParams.get("id");
+    if (id == null) return error(400, "Missing ID");
+    if (isNaN(parseInt(id))) return error(400, "Invalid ID");
+
+    const token = url.searchParams.get("token");
+
+    try {
+        const form = await db.getForm(parseInt(id), token ?? undefined);
+        return new Response(JSON.stringify(form));
+    } catch (e) {
+        if (!(e instanceof FormError)) throw e;
+        if (e.type == FormErrorType.NotFound) return error(404, e.message);
+        if (e.type == FormErrorType.AuthRequried) return error(401, e.message);
+        if (e.type == FormErrorType.Closed || e.type == FormErrorType.Expired) return error(403, e.message);
+        return error(400, e.message);
     }
-
-    const json = await request.json();
-
-    const res = await fetch(POSTGREST_ENDPOINT + "/forms?id=eq." + json.id, {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + SERVICE_ROLE_KEY,
-            "apikey": SERVICE_ROLE_KEY
-        }
-    });
-
-    if (!res.ok) {
-        error(res.status, await res.text());
-    }
-
-    const form = await res.json();
-    
-    // TODO authentication
-
-    return new Response(form.data);
 };

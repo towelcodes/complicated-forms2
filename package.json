@@ -31,7 +31,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/jsonwebtoken": "^9.0.7",
 		"@types/node": "^22.7.4",
+		"jsonwebtoken": "^9.0.2",
+		"postgres": "^3.4.5",
 		"svelte-preprocess": "^6.0.3"
 	}
 }

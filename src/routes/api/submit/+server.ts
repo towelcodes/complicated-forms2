@@ -1,6 +1,6 @@
 import { error } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { POSTGREST_ENDPOINT, SERVICE_ROLE_KEY } from "$env/static/private";
+import { db } from "$lib/server/db";
 
 export const GET: RequestHandler = async () => {
     error(400, "Method not allowed");
@@ -18,28 +18,6 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
         error(400, "Missing ID");
     }
 
-    const body = JSON.stringify({
-        id: json.id,
-        ip_address: getClientAddress(),
-        form_data: json,
-        for: 0
-    });
-
-    const res = await fetch(POSTGREST_ENDPOINT + "/submissions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + SERVICE_ROLE_KEY,
-            "apikey": SERVICE_ROLE_KEY,
-        },
-        body: body
-    });
-
-    console.log(res);
-
-    if (!res.ok) {
-        error(res.status, await res.text());
-    }
-
+    await db.submit(json, 0, getClientAddress());
     return new Response(null, { status: 201 });
 }
