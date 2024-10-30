@@ -1,8 +1,6 @@
 export interface AdditionalInfo {
     title: string,
     description?: string,
-    // type: string, for now we assume all are text
-    value?: string,
 }
 
 export interface Path {
@@ -23,23 +21,63 @@ export enum QuestionType {
 }
 
 export interface Question {
-    uid: string, // must be unique so question can be identified
-    identifier?: string, // does not have to be unique
-    required?: boolean, // defaults to true
+    /**
+     * A unique identifier for the question
+     */
+    uid: string,
+    /**
+     * An optional non-unique identifier that will be shown to the user
+     */
+    identifier?: string,
+    /**
+     * Optionally specify if the question is required. If not specified, defaults to true
+     */
+    required?: boolean,
+    /**
+     * The title of the question
+     */
     title: string,
+    /**
+     * The description of the question
+     */
     description?: string,
+    /**
+     * The type of the question
+     */
     type: QuestionType,
+    /**
+     * The avaliable options that can be selected.
+     * Whether multiple or single selection is determined by the type.
+     * If a text input is used, any responses matching specified regex will be used.
+     */
     options: Option[],
+    /**
+     * Optionally allow a field for additional information to be submitted.
+     * Only text will be accepted.
+     */
     additional?: AdditionalInfo[],
+    /**
+     * The response to the question.
+     * Optionally default values could be specfied here.
+     */
     response?: Response,
 }
 
-export interface Response { // only one of these should be filled ideally
+/**
+ * Typically only one Response value should be filled.
+ * Refer to the Question's QuestionType to determine which.
+ */
+export interface Response {
     single?: string,
     multi: string[],
-    text?: string
+    text?: string,
+    additional: string[]
 }
 
+/**
+ * Base form data.
+ * This should match the root of the form JSON.
+ */
 export interface FormData {
     id: number,
     formVersion: number,
