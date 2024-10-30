@@ -28,7 +28,7 @@
     console.log("additional info bundled with q", question.additional);
 
     // hold values from 
-    let response: Response = {multi: []};
+    let response: Response = {multi: [], additional: []};
     // let selected_single: string;
     // let selected_multi: string[] = [];
     // let input_value: string;
@@ -80,9 +80,17 @@
         updateSub(sel);
     }
 
-    // $: {
-    //     console.log("updated", question.title, question.response);
-    // }
+    let additionalInit = false;
+    $: if (response.additional && question.additional && question.additional.length > 0) {
+        if (!additionalInit) {
+            if (response.additional.length > 0) {
+                updateStore(response);
+                additionalInit = true;
+            }
+        } else {
+            updateStore(response);
+        }
+    }
 
     // text input
     // this will get updated for each character typed
@@ -166,20 +174,20 @@
                     <label for={slugify(option.title)}>{option.title}</label><br/>
                 {/each}
             {:else if type == QuestionType.Text}
-                <p><img src="/icons/cross.png" class="inline h-5" alt="error"> Not implemented</p>
+                <p><span class="material-icons md-18">error</span> Not implemented</p>
             {:else}
-                <p><img src="/icons/cross.png" class="inline h-5" alt="error"> Unsupported option</p>
+                <p><span class="material-icons md-18">error</span> Unsupported option</p>
             {/if}
 
             {#if additional}
-                {#each additional as a}
+                {#each additional as a, i}
                     <div class="my-2 p-4 bg-surface1 rounded-md">
                         <span class="material-icons md-18 text-md align-bottom">edit_note</span>
                         <span class="font-bold text-md">{a.title}</span><br>
                         {#if a.description}
                             <span class="text-gray-700 text-sm">{a.description}</span><br>
                         {/if}
-                        <textarea rows="3" class="resize-none rounded mt-2 w-3/4 p-1" placeholder="Enter additional information as required" bind:value={a.value}></textarea>
+                        <textarea rows="3" class="resize-none rounded mt-2 w-3/4 p-1" placeholder="Enter additional information as required" bind:value={response.additional[i]}></textarea>
                     </div>
                 {/each}
             {/if}
