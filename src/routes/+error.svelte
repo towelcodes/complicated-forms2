@@ -22,10 +22,8 @@
     }
 </script>
 
-<!-- TODO make errors more specific -->
 <div class="latte mx-auto w-4/6 m-5 p-8 bg-gradient-to-r from-surface0 to-crust rounded shadow-md">
     <div class="flex items-center">
-        <!-- <img class="h-16 mr-5" src="{base}/icons/cross.png" alt="error"> -->
         <span class="material-icons md-48 h-5 mr-4 mb-1 md-dark">error</span>
         <div>
             <h1 class="text-3xl font-bold"><span class="bg-blue-400 rounded p-1 text-xl leading-9 align-middle">{ $page.status }</span>

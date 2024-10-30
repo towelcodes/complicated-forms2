@@ -121,4 +121,3 @@
         <button class="not-italic underline hover:cursor-pointer" on:click={() => createModal()}>Learn more</button>
     </span>
 </div>
-<!-- <Question title={data.questions[0].title} options={data.questions[0].options}></Question> -->
