@@ -17,6 +17,11 @@ jobs:
       - name: install dependencies
         run: bun i
 
+      - name: configure environment
+        uses: oNaiPs/secrets-to-env-action@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
+
       - name: build for prod
         run: bun run build
 
@@ -32,12 +37,3 @@ jobs:
             POSTGRES_DB
             POSTGRES_USER
             POSTGRES_PASS
-        env:
-          DB_TYPE: ${{ vars.DB_TYPE }}
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.PORTGRES_PORT }}
-          POSTGRES_DB: ${{ secrets.PORTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.PORTGRES_USER }}
-          POSTGRES_PASS: ${{ secrets.PORTGRES_PASS }}
-          
-      
