@@ -31,10 +31,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          secrets: |
-            DB_TYPE
-            POSTGRES_HOST
-            POSTGRES_PORT
-            POSTGRES_DB
-            POSTGRES_USER
-            POSTGRES_PASS
+          command: pages deploy --project-name=${{ var.CLOUDFLARE_PROJECT_NAME }}
