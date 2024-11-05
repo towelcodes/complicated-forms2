@@ -25,6 +25,8 @@ jobs:
 
       - name: build for prod
         run: bun run build
+        env:
+          PERMIT_IO_SHARING: false
 
       - name: deploy to cloudflare
         uses: cloudflare/wrangler-action@v3

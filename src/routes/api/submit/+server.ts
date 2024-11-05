@@ -18,6 +18,7 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
         error(400, "Missing ID");
     }
 
-    await db.submit(json, 0, getClientAddress());
+    const dbRef = db();
+    await dbRef.submit(json, 0, getClientAddress());
     return new Response(null, { status: 201 });
 }

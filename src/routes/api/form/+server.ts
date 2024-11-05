@@ -3,6 +3,7 @@ import type { RequestHandler } from "./$types";
 import { db, FormError, FormErrorType } from "$lib/server/db";
 
 export const GET: RequestHandler = async ({ url }) => {
+    const dbRef = db();
     const id = url.searchParams.get("id");
     if (id == null) return error(400, "Missing ID");
     if (isNaN(parseInt(id))) return error(400, "Invalid ID");
@@ -10,7 +11,7 @@ export const GET: RequestHandler = async ({ url }) => {
     const token = url.searchParams.get("token");
 
     try {
-        const form = await db.getForm(parseInt(id), token ?? undefined);
+        const form = await dbRef.getForm(parseInt(id), token ?? undefined);
         return new Response(JSON.stringify(form));
     } catch (e) {
         if (!(e instanceof FormError)) throw e;
