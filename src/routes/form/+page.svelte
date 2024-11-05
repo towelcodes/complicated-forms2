@@ -95,6 +95,14 @@
     </div>
 </div>
 
+<div class="latte mx-auto w-1/4 m-5 p-1 bg-red-400 rounded shadow-md" >
+    <div class="flex items-center justify-center">
+        <span class="material-icons inline h-5 mr-1 md-dark md-18">warning</span>
+        <span class="font-bold text-md">Warning</span><br>
+    </div>
+    <center class="text-sm">Testing server: all data can be viewed by anyone with no authentication required.</center>
+</div>
+
 {#each data.questions as question}
     <Question question={question}></Question>
 {/each}
