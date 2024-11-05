@@ -1,8 +1,5 @@
-<script lang="ts">
-    import type { PageData } from './$types';
-    export let data: PageData;
-</script>
-
-<h1>Welcome to SvelteKit</h1>
-<p>Data</p>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div class="m-auto w-1/2 bg-slate-400 rounded-xl text-center p-5 mt-10 mb-5 shadow-2xl">
+    <h1 class="text-3xl font-bold">hi!</h1>
+    <p>this landing page isn't finished yet.</p>
+    <p>you probably want to see a <a href="/form?id=1" class="underline">sample form</a></p>
+</div>
