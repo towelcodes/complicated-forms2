@@ -2,4 +2,5 @@
     <h1 class="text-3xl font-bold">hi!</h1>
     <p>this landing page isn't finished yet.</p>
     <p>you probably want to see a <a href="/form?id=1" class="underline">sample form</a></p>
+    <p>or <a href="/form?id=2">this sample form which has real questions on it</a></p>
 </div>
