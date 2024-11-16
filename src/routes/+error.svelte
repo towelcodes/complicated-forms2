@@ -19,6 +19,18 @@
             heading = "Form is restricted";
             msg = "You are not authorized to access this form. Please contact the owner to request access.";
             break;
+        case "FormAuthInvalid":
+            heading = "Invalid access link";
+            msg = "Your access link is invalid. Please contact the owner to request a new link.";
+            break;
+        case "FormAuthExpired": 
+            heading = "Access link expired";
+            msg = "Your access link has expired. Please contact the owner to request a new link.";
+            break;
+        case "FormMalformed":
+            heading = "Malformed form";
+            msg = "The form you're looking for is not a valid form. It may have been deleted. Please contact the owner.";
+            break;
     }
 </script>
 
