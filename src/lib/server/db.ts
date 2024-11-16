@@ -4,10 +4,13 @@ import type { JSONValue } from "postgres";
 import { PostgresDatabase } from "./postgres";
 
 export enum FormErrorType {
-    NotFound = "FormNotFound",
-    Closed = "FormClosed",
-    AuthRequried = "FormAuthRequired",
-    Expired = "FormExpired"
+    NotFound = "FormNotFound", // form not found in db
+    Closed = "FormClosed", // form closed is true
+    AuthRequried = "FormAuthRequired", // the form requires an access token but was not provided
+    AuthInvalid = "FormAuthInvalid", // the access token is invalid
+    Expired = "FormExpired", // the form expiry data has passed
+    AuthExpred = "FormAuthExpired", // the access token expiry has passed
+    Malformed = "FormMalformed" // the form in the database is invalid 
 }
 
 export class FormError extends Error {

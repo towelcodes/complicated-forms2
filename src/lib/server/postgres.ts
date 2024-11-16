@@ -2,6 +2,7 @@ import { env } from "$env/dynamic/private";
 import postgres, { type JSONValue, type Sql } from "postgres";
 import { FormError, FormErrorType, type Database } from "./db";
 import type { FormsRow } from "./schema";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 
 // TODO postgres should automatically create the tables or otherwise ensure the schema is correct
 
@@ -56,6 +57,15 @@ export class PostgresDatabase implements Database {
         if (form.private) {
             if (!token) throw new FormError(FormErrorType.AuthRequried);
             // TODO implement token checking
+            if (!form.secret) throw new FormError(FormErrorType.Malformed);
+            try { 
+                const decoded = jwt.verify(token, form.secret) as JwtPayload;
+                console.debug(decoded);
+            } catch(e) {
+                console.warn("failed to verify token:", e);
+                if (e instanceof jwt.TokenExpiredError) throw new FormError(FormErrorType.AuthExpred);
+                throw new FormError(FormErrorType.AuthInvalid);
+            }
         }
 
         return form.data;

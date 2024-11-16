@@ -3,6 +3,7 @@ export interface FormsRow {
     created_at: Date;
     open: boolean;
     data: FormData;
+    passphrase: string;
     private?: boolean;
     expiry?: Date;
     secret?: string;
