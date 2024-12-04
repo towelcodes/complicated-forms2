@@ -23,7 +23,7 @@
 
 {#if render}
     <div transition:fly={{ duration: 200, easing: quadInOut, y: -6 }} class="fixed overflow-hidden left-1/2 top-1/2 -translate-x-1/2  -translate-y-1/2
-    text-white text-sm text-center content-center bg-surface1/80 rounded-xl border-white border-2 cursor-default w-1/2 h-1/2 backdrop-blur-md shadow-lg">
+    text-white text-sm text-center content-center bg-mantle/95 rounded-xl border-pink border-2 cursor-default w-1/2 h-1/4 shadow-lg">
         <h1 class="text-xl font-bold mb-3">{ title }</h1>
         { description } <br>
         {#each buttons as button}

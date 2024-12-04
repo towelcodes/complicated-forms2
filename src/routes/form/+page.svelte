@@ -7,11 +7,8 @@
     import { quadInOut } from "svelte/easing";
     import storedResponses from "$lib/response_store";
     import { get } from "svelte/store";
+  import { goto } from "$app/navigation";
 
-    const handleChange = (option: Option) => {
-        console.log(option);
-    };
-    
     type PageData = FormData;
     export let data: PageData;
 
@@ -56,7 +53,8 @@
             console.log(res);
             if (res.ok) {
                 submitting = false;
-                createModal();
+                storedResponses.update(() => new Map());
+                goto("/success");
             }
         }).catch((err) => {
             console.error(err);
@@ -71,7 +69,6 @@
         Your progress was restored from your last session.
         <button class="bg-white rounded ml-1 text-sm text-black p-1 hover:bg-slate-400 hover:cursor-pointer transition" on:click={() => resetSelections()}>Reset</button> 
         <button class="ml-2 hover:cursor-pointer" on:click={() => progressRestored = false}>✖</button>
-        <!-- <div class="absolute top-0 left-0 h-full bg-pink opacity-20 transition duration-2000 ease-in-out"></div> -->
     </div>
 {/if}
 

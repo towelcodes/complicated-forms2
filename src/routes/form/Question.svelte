@@ -142,9 +142,6 @@
             response = res;
         }
     });
-
-    let testval = "";
-    $: console.log(testval);
 </script>
 
 <div transition:slide|global class="latte mx-auto w-4/6 m-5 p-8 bg-surface0 rounded shadow-md" >

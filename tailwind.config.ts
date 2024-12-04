@@ -20,6 +20,7 @@ export default {
       prefix: false,
       // which flavour of colours to use by default, in the `:root`
       defaultFlavour: "frappe",
-    })
+    }),
+    require("tailwindcss-highlights")
   ]
 } as Config;
