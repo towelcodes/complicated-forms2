@@ -7,7 +7,8 @@
     import { quadInOut } from "svelte/easing";
     import storedResponses from "$lib/response_store";
     import { get } from "svelte/store";
-  import { goto } from "$app/navigation";
+    import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
 
     type PageData = FormData;
     export let data: PageData;
@@ -60,7 +61,22 @@
             console.error(err);
         });
     };
+
+    onMount(() => {
+        if (data.background) {
+            document.body.style.setProperty("--bg-img", `url(${data.background})`);
+        }
+    });
 </script>
+
+<style>
+    :global(body) {
+        background-image: var(--bg-img, none);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+</style>
 
 <div id="modal"></div>
 
@@ -74,7 +90,7 @@
 
 <div class="latte mx-auto w-4/6 m-5 p-8 bg-gradient-to-r from-pink to-rosewater rounded shadow-md">
     <div class="flex items-center">
-        <img class="h-16 mr-5" src="{base}/favicon.png" alt="Svelte logo">
+        <img class="h-16 mr-5" src={data.icon || base+"/icons/form.png"} alt="Form Icon">
         <div>
             <h1 class="text-3xl font-bold">{ data.title }</h1>
             <p>

@@ -85,4 +85,6 @@ export interface FormData {
     description: string,
     allRequired: boolean,
     questions: Question[],
+    icon?: string,
+    background?: string,
 }
